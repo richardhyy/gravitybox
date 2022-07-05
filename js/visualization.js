@@ -4,6 +4,10 @@ class Visualization {
         this.maginitudeRange = [Number.MIN_VALUE, Number.MAX_VALUE];
     }
 
+    clear() {
+        viewer.entities.removeAll();
+    }
+
     loadModelFromLocal(file) {
         let origin = Cesium.Cartesian3.fromArray([0, 0, 0]);
         viewer.trackedEntity = viewer.entities.add({
