@@ -43,6 +43,8 @@ class Visualization {
         let reader = new FileReader();
 
         reader.onload = function (e) {
+            // showProcessingToast("Processing data...");
+
             let data = e.target.result;
             let lines = data.split('\n');
             this.gravityField = [];
@@ -83,6 +85,7 @@ class Visualization {
 
             this.maginitudeRange = [minMagnitude, maxMagnitude];
 
+            // showProcessingToast("Rendering...");
             Visualization.displayGravityField(this.gravityField, this.maginitudeRange, true, 50);
         }
         reader.readAsText(file);

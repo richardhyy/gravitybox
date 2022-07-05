@@ -27,3 +27,11 @@ $("#load-btn").on('click', function() {
         }
     });
 });
+
+$("#screenshot-btn").on('click', function() {
+    let a = document.createElement('a');
+    viewer.render();
+    a.href = viewer.canvas.toDataURL("image/png");
+    a.download = "GravityBox_Export.png";
+    a.click();
+});

@@ -54,15 +54,24 @@ function clearInnerAndShowSpinner(id, showToast = true) {
     </div>`
 }
 
+let _toastTimeout = null;
+
 function showToast(message, additionalClass = ["text-white", "bg-dark"], timeout = 2000) {
     let toast = document.getElementById("generic-toast");
     toast.classList.add(...additionalClass);
     document.getElementById("toast-message").innerHTML = message;
+
+    if (_toastTimeout) {
+        // clear previous timeout
+        clearTimeout(_toastTimeout);
+    }
+
     let bsToast = new bootstrap.Toast(toast)
     bsToast.show()
     setTimeout(function () {
         bsToast.hide();
         toast.classList.remove(...additionalClass);
+        _toastTimeout = null;
     }, timeout);
 }
 
@@ -83,8 +92,8 @@ function showErrorToastAjax(error, defaultMessage) {
     showErrorToast(message);
 }
 
-function showProcessingToast(timeout = 500) {
-    showToast('<div class="spinner-border spinner-border-sm" role="status"></div> ' + " Please wait...", ['text-white', 'bg-info'], timeout);
+function showProcessingToast(text = " Please wait...", timeout = 500) {
+    showToast('<div class="spinner-border spinner-border-sm" role="status"></div> ' + text, ['text-white', 'bg-dark'], timeout);
 }
 
 function toggleButtonStatus(btnId, processing) {

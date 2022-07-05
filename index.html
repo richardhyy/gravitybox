@@ -31,6 +31,16 @@
                 title="Select <b>.glb</b> for model, <br><b>.csv</b> for gravity field">
             <i class="bi bi-folder2-open"></i>
         </button>
+        <button id="screenshot-btn" class="cesium-button"
+                data-bs-toggle="tooltip" data-bs-placement="top"
+                title="Export to image">
+            <i class="bi bi-camera"></i>
+        </button>
+        <button id="rotate-btn" class="cesium-button"
+                data-bs-toggle="tooltip" data-bs-placement="top"
+                title="Toggle rotation">
+            <i class="bi bi-arrow-counterclockwise"></i>
+        </button>
         <button id="option-btn" class="cesium-button"
                 data-bs-toggle="tooltip" data-bs-placement="top"
                 title="Options">
@@ -41,7 +51,7 @@
 
 
 <!-- Toast -->
-<div id="generic-toast" class="toast position-fixed bottom-0 end-0 p-2 m-2 top-control" role="alert"
+<div id="generic-toast" class="toast position-fixed top-0 end-0 p-2 m-2 top-control" role="alert"
      aria-live="assertive" aria-atomic="true" style="z-index: 100">
     <div class="d-flex">
         <div class="toast-body" id="toast-message">
