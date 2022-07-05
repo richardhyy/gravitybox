@@ -1,16 +1,58 @@
 class Visualization {
+    gravityField;
+    magnitudeRange;
+    rotationInterval = 50;
+    #currentRotationInterval = 50;
+    rotationTimer = null;
+    generalization = 50;
+    colorSlicing = true;
+
+    #modelEntity = null;
+    #isGravityFieldLoaded = false;
+
     constructor() {
         this.gravityField = [];
-        this.maginitudeRange = [Number.MIN_VALUE, Number.MAX_VALUE];
+        this.magnitudeRange = [Number.MIN_VALUE, Number.MAX_VALUE];
     }
 
-    clear() {
-        viewer.entities.removeAll();
+    clear(model = true, gravityField = true) {
+        if (model) {
+            viewer.entities.remove(this.#modelEntity);
+            this.#modelEntity = null;
+        }
+        if (gravityField) {
+            viewer.entities.removeAll();
+            if (this.#modelEntity) {
+                // Re-add the model
+                viewer.entities.add(this.#modelEntity);
+                viewer.trackedEntity = this.#modelEntity;
+            }
+        }
+    }
+
+    toggleRotation() {
+        if (this.rotationTimer) {
+            clearInterval(this.rotationTimer);
+            this.rotationTimer = null;
+        } else {
+            let instance = this;
+            let rotate = function() {
+                // Check if the rotation interval has changed
+                if (instance.#currentRotationInterval !== instance.rotationInterval) {
+                    clearInterval(instance.rotationTimer);
+                    instance.#currentRotationInterval = instance.rotationInterval;
+                    instance.rotationTimer = setInterval(rotate, instance.rotationInterval);
+                }
+                // Rotate the camera
+                camera.rotate(Cesium.Cartesian3.UNIT_Z, Cesium.Math.toRadians(0.2));
+            };
+            this.rotationTimer = setInterval(rotate, this.rotationInterval);
+        }
     }
 
     loadModelFromLocal(file) {
         let origin = Cesium.Cartesian3.fromArray([0, 0, 0]);
-        viewer.trackedEntity = viewer.entities.add({
+        this.#modelEntity = viewer.entities.add({
             name: file.name,
             position: origin,
             orientation: Cesium.Transforms.headingPitchRollQuaternion(
@@ -26,6 +68,16 @@ class Visualization {
                 scale: 800,
             }
         });
+        viewer.trackedEntity = this.#modelEntity;
+    }
+
+    drawGravityFiled() {
+        showProcessingToast("Rendering...");
+        if (!this.#isGravityFieldLoaded) {
+            // Do not do clear() if the gravity field has not been loaded
+            this.clear(false, true);
+        }
+        Visualization.displayGravityField(this.gravityField, this.maginitudeRange, this.colorSlicing, this.generalization);
     }
 
     /**
@@ -46,12 +98,13 @@ class Visualization {
     loadGravityFieldFromLocal(file) {
         let reader = new FileReader();
 
+        let instance = this;
         reader.onload = function (e) {
             // showProcessingToast("Processing data...");
 
             let data = e.target.result;
             let lines = data.split('\n');
-            this.gravityField = [];
+            instance.gravityField = [];
 
             let minMagnitude = Number.MAX_VALUE;
             let maxMagnitude = Number.MIN_VALUE;
@@ -67,7 +120,7 @@ class Visualization {
                     let vy = parseFloat(values[4]);
                     let vz = parseFloat(values[5]);
                     let magnitude = parseFloat(values[6]);
-                    this.gravityField.push({
+                    instance.gravityField.push({
                         x: x,
                         y: y,
                         z: z,
@@ -87,10 +140,9 @@ class Visualization {
                 }
             }
 
-            this.maginitudeRange = [minMagnitude, maxMagnitude];
+            instance.maginitudeRange = [minMagnitude, maxMagnitude];
 
-            // showProcessingToast("Rendering...");
-            Visualization.displayGravityField(this.gravityField, this.maginitudeRange, true, 50);
+            instance.drawGravityFiled();
         }
         reader.readAsText(file);
     }

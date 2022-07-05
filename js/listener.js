@@ -5,7 +5,7 @@ $("#load-btn").on('click', function() {
     browseFile(function(files) {
         // Clear previous data
         visualization.clear();
-        
+
         let modelFile = null;
         let gravityFile = null;
 
@@ -40,14 +40,38 @@ $("#screenshot-btn").on('click', function() {
 });
 
 
-let rotationTimer = null;
 $("#rotate-btn").on('click', function() {
-    if (rotationTimer) {
-        clearInterval(rotationTimer);
-        rotationTimer = null;
-    } else {
-        rotationTimer = setInterval(function() {
-            camera.rotate(Cesium.Cartesian3.UNIT_Z, Cesium.Math.toRadians(0.2));
-        }, 50);
+    visualization.toggleRotation();
+});
+
+
+// Initialize options
+$("#rotationSpeedSlider").val(visualization.rotationInterval);
+$("#generalizationSlider").val(visualization.generalization);
+$("#colorSlicingCheck").prop('checked', visualization.colorSlicing);
+
+const optionModal = new bootstrap.Modal(document.getElementById('optionModal'));
+$("#option-btn").on('click', function() {
+    optionModal.show();
+});
+
+$("#save-btn").on('click', function() {
+    visualization.rotationInterval = 100 - parseInt($("#rotationSpeedSlider").val());
+
+    let renderConfigChanged = false;
+    let generalization = parseInt($("#generalizationSlider").val());
+    if (visualization.generalization !== generalization) {
+        visualization.generalization = generalization;
+        renderConfigChanged = true;
     }
+    let colorSlicing = $("#colorSlicingCheck").prop('checked');
+    if (visualization.colorSlicing !== colorSlicing) {
+        visualization.colorSlicing = colorSlicing;
+        renderConfigChanged = true;
+    }
+
+    if (renderConfigChanged) {
+        visualization.drawGravityFiled();
+    }
+    optionModal.hide();
 });
