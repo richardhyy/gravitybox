@@ -1,3 +1,5 @@
+let visualization = new Visualization();
+
 $("#load-btn").on('click', function() {
     // Load model(.glb) and gravity field files.
 
@@ -15,11 +17,13 @@ $("#load-btn").on('click', function() {
         }
 
         if (modelFile) {
-            loadModelFromLocal(modelFile);
+            console.log("Loading model: " + modelFile.name);
+            visualization.loadModelFromLocal(modelFile);
         }
 
         if (gravityFile) {
-            loadGravityFieldFromLocal(gravityFile);
+            console.log("Loading gravity field: " + gravityFile.name);
+            visualization.loadGravityFieldFromLocal(gravityFile);
         }
     });
 });

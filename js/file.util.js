@@ -5,6 +5,7 @@
 function browseFile(onOpen) {
     let input = document.createElement('input');
     input.type = 'file';
+    input.multiple = true;
     input.onchange = e => {
         onOpen(e.target.files);
     }
