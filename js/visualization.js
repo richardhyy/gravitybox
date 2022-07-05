@@ -5,14 +5,21 @@ class Visualization {
     }
 
     loadModelFromLocal(file) {
+        let origin = Cesium.Cartesian3.fromArray([0, 0, 0]);
         viewer.trackedEntity = viewer.entities.add({
             name: file.name,
-            position: Cesium.Cartesian3.fromArray([0, 0, 0]),
+            position: origin,
+            orientation: Cesium.Transforms.headingPitchRollQuaternion(
+                origin, new Cesium.HeadingPitchRoll(
+                    Cesium.Math.toRadians(180),
+                    Cesium.Math.toRadians(90),
+                    0)
+            ),
             model: {
                 uri: URL.createObjectURL(file),
                 minimumPixelSize: 128,
                 maximumScale: 20000,
-                scale: 1000,
+                scale: 800,
             }
         });
     }
