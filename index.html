@@ -28,7 +28,8 @@
         <button id="load-btn" class="cesium-button"
                 data-bs-toggle="tooltip" data-bs-placement="top"
                 data-bs-html="true"
-                title="Select <b>.glb</b> for model, <br><b>.csv</b> for gravity field.<p class='text-muted'>Hold <b>ctrl</b> (or <i class='bi bi-command'></i> on Mac) to select multiple files.</p>">
+                title="Select <b>.glb</b> for model, <br><b>.csv</b> for gravity field.
+                <p class='text-muted m-0 p-0'>Hold <b>ctrl</b> (or <i class='bi bi-command'></i> on Mac) to select multiple files.</p>">
             <i class="bi bi-folder2-open"></i>
         </button>
         <button id="screenshot-btn" class="cesium-button"
@@ -70,7 +71,7 @@
             </div>
             <div class="d-flex justify-content-between m-3">
                 <div>
-                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
                 <div>
                     <button type="button" class="btn btn-secondary" id="save-btn">Save changes</button>
@@ -100,6 +101,7 @@
 
 <script>
     enableTooltip();
+    showTooltip("load-btn");
     showToast("Welcome to GravityBox!");
 </script>
 </body>

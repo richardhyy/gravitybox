@@ -17,6 +17,11 @@ function enableTooltip() {
     });
 }
 
+function showTooltip(elementId) {
+    let element = $("#" + elementId);
+    new bootstrap.Tooltip(element).show();
+}
+
 function enableDrag(selector) {
     $(selector).draggable({
         handle: ".draggable"
@@ -32,6 +37,17 @@ function enableDismissablePopover(sanitize = true) {
             sanitize: sanitize,
         })
     });
+}
+
+function showPopover(selector) {
+    let element = $("#" + elementId);
+    let popover = new bootstrap.Popover(element, {
+            trigger: 'focus',
+            html: true,
+            sanitize: true,
+            customClass: element.attr('data-bs-custom-class'),
+        });
+    popover.show();
 }
 
 function registerDropdownToggle(selector) {
