@@ -15,6 +15,8 @@ $("#load-btn").on('click', function() {
                 modelFile = file;
             } else if (file.name.endsWith('.csv')) {
                 gravityFile = file;
+            } else {
+                showErrorToast("Unsupported file type: " + file.name);
             }
         }
 
@@ -26,6 +28,11 @@ $("#load-btn").on('click', function() {
         if (gravityFile) {
             console.log("Loading gravity field: " + gravityFile.name);
             visualization.loadGravityFieldFromLocal(gravityFile);
+        }
+
+        // Show tip if not both model and gravity field are loaded
+        if (files.length === 1) {
+            showTipToast("Select both model (.glb) and gravity field (.csv) files to display them together.");
         }
     });
 });

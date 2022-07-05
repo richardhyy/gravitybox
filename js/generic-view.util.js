@@ -72,7 +72,7 @@ function clearInnerAndShowSpinner(id, showToast = true) {
 
 let _toastTimeout = null;
 
-function showToast(message, additionalClass = ["text-white", "bg-dark"], timeout = 2000) {
+function showToast(message, additionalClass = ["text-white", "bg-dark"], timeout = 3000) {
     let toast = document.getElementById("generic-toast");
     toast.classList.add(...additionalClass);
     document.getElementById("toast-message").innerHTML = message;
@@ -84,15 +84,24 @@ function showToast(message, additionalClass = ["text-white", "bg-dark"], timeout
 
     let bsToast = new bootstrap.Toast(toast)
     bsToast.show()
-    setTimeout(function () {
+    _toastTimeout = setTimeout(function () {
         bsToast.hide();
         toast.classList.remove(...additionalClass);
         _toastTimeout = null;
     }, timeout);
 }
 
+/**
+ * Show tip toast.
+ * Requires bootstrap-icons.
+ * @param message
+ */
+function showTipToast(message) {
+    showToast("<b class='lh-lg'><i class='bi bi-lightbulb-fill'></i> Tip:</b><br>" + message);
+}
+
 function showErrorToast(message) {
-    showToast('Error: ' + message, ['text-white', 'bg-danger']);
+    showToast(message, ['text-white', 'bg-danger']);
 }
 
 function showErrorToastAjax(error, defaultMessage) {

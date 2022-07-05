@@ -14,6 +14,19 @@ html,body {
     background: #000;
 }
 
+#author {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 10px;
+    color: #eee;
+    opacity: 0.5;
+    font-size: 12px;
+    text-align: right;
+    font-family: monospace, serif;
+    z-index: 100;
+}
+
 /* Tool panel */
 
 #tool-panel {
