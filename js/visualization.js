@@ -127,10 +127,35 @@ class Visualization {
         return colorSlices;
     }
 
+    static rgbaToCssColor(rgba) {
+        let red = rgba & 255;
+        let green = (rgba >> 8) & 255;
+        let blue = (rgba >> 16) & 255;
+        let alpha = (rgba >> 24) & 255;
+        return "rgba(" + red + "," + green + "," + blue + "," + alpha + ")";
+    }
+
     static displayGravityField(gravityField, magnitudeRange, colorSlicing = true, generalization = 0) {
         let colorSlices = colorSlicing ? Visualization.generateColorSlices(magnitudeRange) : [];
         let colorCount = colorSlices.length;
         let color = Cesium.Color.AQUA; // Declare outside the loop for better performance
+
+        // Update legend
+        $('#legend').css('display', 'block');
+        // let labelContainer = $('#gradient-bar-label-container');
+        let gradientBar = $('#gradient-bar');
+        if (colorSlicing) {
+            // Update gradient bar
+            let minColor = Visualization.rgbaToCssColor(colorSlices[0].toRgba());
+            let maxColor = Visualization.rgbaToCssColor(colorSlices[colorCount - 1].toRgba());
+            gradientBar.css('background', 'linear-gradient(to right, ' + minColor + ' 0%, ' + maxColor + ' 100%)');
+            // Update gradient bar labels
+            $('#gradient-bar-label-min').text(magnitudeRange[0].toExponential());
+            $('#gradient-bar-label-max').text(magnitudeRange[1].toExponential());
+        } else {
+            // Update gradient bar
+            gradientBar.css('background', Visualization.rgbaToCssColor(color.toRgba()));
+        }
 
         let arraySize = gravityField.length;
         for (let i = 0; i < arraySize; i += generalization) {

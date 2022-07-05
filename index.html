@@ -3,22 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <title>GravityBox</title>
-    <link rel="stylesheet" href="libs/cesium/Widgets/widgets.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="libs/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="libs/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="libs/cesium/Widgets/widgets.css">
     <script src="libs/cesium/Cesium.js"></script>
     <script src="libs/jquery-3.6.0.js"></script>
     <script src="libs/bootstrap/js/bootstrap.js"></script>
+    <script src="libs/bootstrap/js/bootstrap.bundle.js"></script>
 </head>
 <body>
 <div id="cesiumContainer"></div>
+<div id="legend" style="display: none">
+    <div class="legend-item">
+        <div class="legend-color-gradient mb-1" id="gradient-bar"></div>
+        <div class="legend-label-group" id="gradient-bar-label-container">
+            <div class="legend-label" id="gradient-bar-label-min">Min</div>
+            <div class="legend-label" id="gradient-bar-label-max">Max</div>
+        </div>
+    </div>
+</div>
 <div id="tool-panel">
-    <button id="load-btn" class="cesium-button">Load</button>
+    <div class="d-flex justify-content-around">
+        <button id="load-btn" class="cesium-button"
+                data-bs-toggle="tooltip" data-bs-placement="top"
+                data-bs-html="true"
+                title="Select <b>.glb</b> for model, <br><b>.csv</b> for gravity field">
+            <i class="bi bi-folder2-open"></i>
+        </button>
+        <button id="option-btn" class="cesium-button"
+                data-bs-toggle="tooltip" data-bs-placement="top"
+                title="Options">
+            <i class="bi bi-gear"></i>
+        </button>
+    </div>
 </div>
 
+
+<!-- Toast -->
+<div id="generic-toast" class="toast position-fixed bottom-0 end-0 p-2 m-2 top-control" role="alert"
+     aria-live="assertive" aria-atomic="true" style="z-index: 100">
+    <div class="d-flex">
+        <div class="toast-body" id="toast-message">
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                aria-label="Close"></button>
+    </div>
+</div>
+
+<script src="js/generic-view.util.js"></script>
 <script src="js/file.util.js"></script>
 <script src="js/init.js"></script>
 <script src="js/visualization.js"></script>
 <script src="js/listener.js"></script>
+
+<script>
+    enableTooltip();
+    showToast("Welcome to GravityBox!");
+</script>
 </body>
 </html>
