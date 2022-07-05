@@ -6,6 +6,7 @@ class Visualization {
     rotationTimer = null;
     generalization = 50;
     colorSlicing = true;
+    singleColor = Cesium.Color.AQUA;
 
     #modelEntity = null;
     #isGravityFieldLoaded = false;
@@ -77,7 +78,7 @@ class Visualization {
             // Do not do clear() if the gravity field has not been loaded
             this.clear(false, true);
         }
-        Visualization.displayGravityField(this.gravityField, this.maginitudeRange, this.colorSlicing, this.generalization);
+        Visualization.displayGravityField(this.gravityField, this.maginitudeRange, this.singleColor, this.colorSlicing, this.generalization);
     }
 
     /**
@@ -194,10 +195,17 @@ class Visualization {
         return "rgba(" + red + "," + green + "," + blue + "," + alpha + ")";
     }
 
-    static displayGravityField(gravityField, magnitudeRange, colorSlicing = true, generalization = 0) {
+    static rgbaToRgbCssHexColor(rgba) {
+        let red = rgba & 255;
+        let green = (rgba >> 8) & 255;
+        let blue = (rgba >> 16) & 255;
+        return "#" + ((1 << 24) + (red << 16) + (green << 8) + blue).toString(16).slice(1);
+    }
+
+    static displayGravityField(gravityField, magnitudeRange, defaultColor, colorSlicing = true, generalization = 0) {
         let colorSlices = colorSlicing ? Visualization.generateColorSlices(magnitudeRange) : [];
         let colorCount = colorSlices.length;
-        let color = Cesium.Color.AQUA; // Declare outside the loop for better performance
+        let color = defaultColor; // Declare outside the loop for better performance
 
         // Update legend
         $('#legend').css('display', 'block');

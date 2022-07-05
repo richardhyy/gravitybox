@@ -56,10 +56,18 @@ $("#rotate-btn").on('click', function() {
 $("#rotationSpeedSlider").val(visualization.rotationInterval);
 $("#generalizationSlider").val(visualization.generalization);
 $("#colorSlicingCheck").prop('checked', visualization.colorSlicing);
+$("#singleColorOption").css('display', visualization.colorSlicing ? 'none' : 'block');
+$("#singleColorInput").val(Visualization.rgbaToRgbCssHexColor(visualization.singleColor.toRgba()));
 
 const optionModal = new bootstrap.Modal(document.getElementById('optionModal'));
 $("#option-btn").on('click', function() {
     optionModal.show();
+});
+
+$("#colorSlicingCheck").on('change', function() {
+    // Show/hide single color input
+    let checked = $(this).prop('checked');
+    $("#singleColorOption").css('display', checked ? 'none' : 'block');
 });
 
 $("#save-btn").on('click', function() {
@@ -75,6 +83,14 @@ $("#save-btn").on('click', function() {
     if (visualization.colorSlicing !== colorSlicing) {
         visualization.colorSlicing = colorSlicing;
         renderConfigChanged = true;
+    }
+    if (!colorSlicing) {
+        // Only update the single color if the color slicing is disabled
+        let singleColor = $("#singleColorInput").val();
+        if (Visualization.rgbaToRgbCssHexColor(visualization.singleColor.toRgba()) !== singleColor) {
+            visualization.singleColor = new Cesium.Color.fromCssColorString(singleColor);
+            renderConfigChanged = true;
+        }
     }
 
     if (renderConfigChanged) {
