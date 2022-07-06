@@ -1,6 +1,8 @@
 let visualization = new Visualization();
 
 $("#load-btn").on('click', function() {
+    removeIntroductionFlashing();
+
     // Load model(.glb) and gravity field files.
     browseFile(function(files) {
         // Clear previous data

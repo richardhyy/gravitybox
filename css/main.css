@@ -46,6 +46,24 @@ html,body {
     -webkit-backdrop-filter: blur(12px);
 }
 
+@-webkit-keyframes flashing {
+    from {
+        border: 1px solid #E4AD57;
+    }
+
+    to {
+        border: 1px solid rgba(228, 173, 87, 0);
+    }
+}
+
+.introduction-flashing {
+    -webkit-animation-duration: 2s;
+    -webkit-animation-name: flashing;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-direction: alternate;
+    -webkit-animation-timing-function: ease-in-out;
+}
+
 /* Legend panel */
 
 #legend {

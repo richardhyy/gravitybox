@@ -167,3 +167,13 @@ function requireConfirm(elementId, onConfirm, defaultText, confirmText = "Confir
         }, timeout);
     }
 }
+
+/**
+ * Remove .introduction-flashing class from all elements.
+ */
+function removeIntroductionFlashing() {
+    let elements = document.querySelectorAll(".introduction-flashing");
+    elements.forEach(function (element) {
+        element.classList.remove("introduction-flashing");
+    });
+}
