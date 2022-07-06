@@ -125,7 +125,7 @@ function showErrorToastAjax(error, defaultMessage) {
     showErrorToast(message);
 }
 
-function showProcessingToast(text = " Please wait...", timeout = 5000) {
+function showProcessingToast(text = " Please wait...", timeout = 15000) {
     showToast('<div class="spinner-border spinner-border-sm" role="status"></div> ' + text, ['text-white', 'bg-dark'], timeout);
 }
 
