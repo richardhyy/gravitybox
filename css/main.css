@@ -27,6 +27,17 @@ html,body {
     z-index: 100;
 }
 
+.blur-background {
+    background: rgba(30, 33, 35, 0.65) !important;
+    border: rgba(60, 74, 80, 0.65) solid 2px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.thick-shadow {
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+}
+
 /* Tool panel */
 
 #tool-panel {
@@ -38,12 +49,8 @@ html,body {
     max-width: 300px;
     min-width: 250px;
     z-index: 100;
-    background-color: rgba(30, 33, 35, 0.65);
-    border: rgba(60, 74, 80, 0.65) solid 2px;
     border-radius: 10px;
     padding: 10px;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
 }
 
 @-webkit-keyframes flashing {
@@ -62,6 +69,36 @@ html,body {
     -webkit-animation-iteration-count: infinite;
     -webkit-animation-direction: alternate;
     -webkit-animation-timing-function: ease-in-out;
+}
+
+/* Library */
+#library ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#library ul li {
+    line-height: 2em;
+    border-radius: 4px;
+    padding: 5px 15px;
+    cursor: pointer;
+}
+
+#library ul li:hover {
+    background-color: rgba(79, 94, 105, 0.6);
+}
+
+.library-item-thumbnail {
+    width: 90px;
+    height: 90px;
+    border-radius: 5px;
+    background-color: #000;
+    padding: 5px;
+}
+
+.library-item-detail {
+    width: 100%;
 }
 
 /* Legend panel */

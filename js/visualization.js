@@ -51,10 +51,15 @@ class Visualization {
         }
     }
 
-    loadModelFromLocal(file) {
+    loadModel(url, name, scale = 800) {
+        // Remove the old model
+        if (this.#modelEntity) {
+            viewer.entities.remove(this.#modelEntity);
+        }
+
         let origin = Cesium.Cartesian3.fromArray([0, 0, 0]);
         this.#modelEntity = viewer.entities.add({
-            name: file.name,
+            name: name,
             position: origin,
             orientation: Cesium.Transforms.headingPitchRollQuaternion(
                 origin, new Cesium.HeadingPitchRoll(
@@ -63,13 +68,17 @@ class Visualization {
                     0)
             ),
             model: {
-                uri: URL.createObjectURL(file),
+                uri: url,
                 minimumPixelSize: 128,
                 maximumScale: 20000,
-                scale: 800,
+                scale: scale,
             }
         });
         viewer.trackedEntity = this.#modelEntity;
+    }
+
+    loadModelFromLocal(file) {
+        this.loadModel(URL.createObjectURL(file), file.name);
     }
 
     drawGravityFiled() {
@@ -82,8 +91,6 @@ class Visualization {
     }
 
     /**
-     * Load gravity field and display it on the globe.
-     *
      * Gravity field is stored in CSV format.
      * Example:
      *     X,Y,Z,vx,vy,vz,magnitude
@@ -94,55 +101,57 @@ class Visualization {
      *     -834.578,127.638,1596.9,4.0398975e-06,1.8306627e-05,-0.00018179422,1.827583e-04
      * where X, Y, Z is the position, and vx, vy, vz is the direction.
      *
-     * @param file {File}
+     * @param data The gravity field data in CSV format
      */
+    parseAndLoadGravityField(data) {
+        let lines = data.split('\n');
+        this.gravityField = [];
+
+        let minMagnitude = Number.MAX_VALUE;
+        let maxMagnitude = Number.MIN_VALUE;
+
+        for (let i = 1; i < lines.length; i++) { // Skip the first line (header)
+            let line = lines[i];
+            let values = line.split(',');
+            if (values.length >= 7) {
+                let x = parseFloat(values[0]);
+                let y = parseFloat(values[1]);
+                let z = parseFloat(values[2]);
+                let vx = parseFloat(values[3]);
+                let vy = parseFloat(values[4]);
+                let vz = parseFloat(values[5]);
+                let magnitude = parseFloat(values[6]);
+                this.gravityField.push({
+                    x: x,
+                    y: y,
+                    z: z,
+                    vx: vx,
+                    vy: vy,
+                    vz: vz,
+                    magnitude: magnitude,
+                });
+
+                // Update min and max magnitude
+                if (magnitude < minMagnitude) {
+                    minMagnitude = magnitude;
+                }
+                if (magnitude > maxMagnitude) {
+                    maxMagnitude = magnitude;
+                }
+            }
+        }
+
+        this.maginitudeRange = [minMagnitude, maxMagnitude];
+    }
+
     loadGravityFieldFromLocal(file) {
         let reader = new FileReader();
 
         let instance = this;
         reader.onload = function (e) {
             // showProcessingToast("Processing data...");
-
             let data = e.target.result;
-            let lines = data.split('\n');
-            instance.gravityField = [];
-
-            let minMagnitude = Number.MAX_VALUE;
-            let maxMagnitude = Number.MIN_VALUE;
-
-            for (let i = 1; i < lines.length; i++) { // Skip the first line (header)
-                let line = lines[i];
-                let values = line.split(',');
-                if (values.length >= 7) {
-                    let x = parseFloat(values[0]);
-                    let y = parseFloat(values[1]);
-                    let z = parseFloat(values[2]);
-                    let vx = parseFloat(values[3]);
-                    let vy = parseFloat(values[4]);
-                    let vz = parseFloat(values[5]);
-                    let magnitude = parseFloat(values[6]);
-                    instance.gravityField.push({
-                        x: x,
-                        y: y,
-                        z: z,
-                        vx: vx,
-                        vy: vy,
-                        vz: vz,
-                        magnitude: magnitude,
-                    });
-
-                    // Update min and max magnitude
-                    if (magnitude < minMagnitude) {
-                        minMagnitude = magnitude;
-                    }
-                    if (magnitude > maxMagnitude) {
-                        maxMagnitude = magnitude;
-                    }
-                }
-            }
-
-            instance.maginitudeRange = [minMagnitude, maxMagnitude];
-
+            instance.parseAndLoadGravityField(data);
             instance.drawGravityFiled();
         }
         reader.readAsText(file);

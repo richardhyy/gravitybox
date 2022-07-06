@@ -1,0 +1,32 @@
+{
+  "67P": {
+    "name": "67P/Churyumov–Gerasimenko",
+    "description": "It was first observed in 1969, when several astronomers from Kiev visited the Alma-Ata Astrophysical Institute in Kazakhstan to conduct a survey of comets.",
+    "thumbnail": "/resources/samples/67P/thumbnail.jpg",
+    "files": {
+      "model": {
+        "url": "/resources/samples/67P/67p.glb",
+        "size": "8.39 MiB"
+      },
+      "gravity_field": {
+        "url": "/resources/samples/67P/67p.csv",
+        "size": "35.38 MiB"
+      }
+    }
+  },
+  "Bennu": {
+    "name": "101955 Bennu",
+    "description": "It is a carbonaceous asteroid in the Apollo group discovered by the LINEAR Project on 11 September 1999.",
+    "thumbnail": "/resources/samples/Bennu/thumbnail.jpg",
+    "files": {
+      "model": {
+        "url": "/resources/samples/Bennu/bennu.glb",
+        "size": "15.74 MiB"
+      },
+      "gravity_field": {
+        "url": "/resources/samples/Bennu/bennu.csv",
+        "size": "26.8 MiB"
+      }
+    }
+  }
+}
