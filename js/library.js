@@ -58,17 +58,20 @@ class Library {
         let model = item.files.model;
         let gravityField = item.files.gravity_field;
 
-        showProcessingToast();
+        showProcessingToast("Downloading model...", 10000);
         // load model
         visualization.loadModel(model.url, name);
+
+        showProcessingToast("Downloading gravity field...", 10000);
 
         // load gravity field
         $.ajax({
             url: gravityField.url,
             dataType: 'text',
             success: (data) => {
-                visualization.parseAndLoadGravityField(data);
-                visualization.drawGravityFiled();
+                visualization.parseAndLoadGravityField(data).then(r => {
+                    showSuccessToast(`Successfully loaded${name}`);
+                });
             }
         })
     }

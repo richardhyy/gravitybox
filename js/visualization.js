@@ -103,45 +103,56 @@ class Visualization {
      *
      * @param data The gravity field data in CSV format
      */
-    parseAndLoadGravityField(data) {
-        let lines = data.split('\n');
-        this.gravityField = [];
+    async parseAndLoadGravityField(data) {
+        const promise = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                let lines = data.split('\n');
+                this.gravityField = [];
 
-        let minMagnitude = Number.MAX_VALUE;
-        let maxMagnitude = Number.MIN_VALUE;
+                let minMagnitude = Number.MAX_VALUE;
+                let maxMagnitude = Number.MIN_VALUE;
 
-        for (let i = 1; i < lines.length; i++) { // Skip the first line (header)
-            let line = lines[i];
-            let values = line.split(',');
-            if (values.length >= 7) {
-                let x = parseFloat(values[0]);
-                let y = parseFloat(values[1]);
-                let z = parseFloat(values[2]);
-                let vx = parseFloat(values[3]);
-                let vy = parseFloat(values[4]);
-                let vz = parseFloat(values[5]);
-                let magnitude = parseFloat(values[6]);
-                this.gravityField.push({
-                    x: x,
-                    y: y,
-                    z: z,
-                    vx: vx,
-                    vy: vy,
-                    vz: vz,
-                    magnitude: magnitude,
-                });
+                for (let i = 1; i < lines.length; i++) { // Skip the first line (header)
+                    let line = lines[i];
+                    let values = line.split(',');
+                    if (values.length >= 7) {
+                        let x = parseFloat(values[0]);
+                        let y = parseFloat(values[1]);
+                        let z = parseFloat(values[2]);
+                        let vx = parseFloat(values[3]);
+                        let vy = parseFloat(values[4]);
+                        let vz = parseFloat(values[5]);
+                        let magnitude = parseFloat(values[6]);
+                        this.gravityField.push({
+                            x: x,
+                            y: y,
+                            z: z,
+                            vx: vx,
+                            vy: vy,
+                            vz: vz,
+                            magnitude: magnitude,
+                        });
 
-                // Update min and max magnitude
-                if (magnitude < minMagnitude) {
-                    minMagnitude = magnitude;
+                        // Update min and max magnitude
+                        if (magnitude < minMagnitude) {
+                            minMagnitude = magnitude;
+                        }
+                        if (magnitude > maxMagnitude) {
+                            maxMagnitude = magnitude;
+                        }
+                    }
                 }
-                if (magnitude > maxMagnitude) {
-                    maxMagnitude = magnitude;
-                }
-            }
-        }
 
-        this.maginitudeRange = [minMagnitude, maxMagnitude];
+                this.maginitudeRange = [minMagnitude, maxMagnitude];
+                resolve();
+            }, 0);
+        });
+
+
+        showProcessingToast("Loading gravity field...", 1000);
+        promise.then(() => {
+            this.drawGravityFiled();
+        });
     }
 
     loadGravityFieldFromLocal(file) {
@@ -149,10 +160,8 @@ class Visualization {
 
         let instance = this;
         reader.onload = function (e) {
-            // showProcessingToast("Processing data...");
             let data = e.target.result;
             instance.parseAndLoadGravityField(data);
-            instance.drawGravityFiled();
         }
         reader.readAsText(file);
     }
@@ -254,5 +263,7 @@ class Visualization {
                 // ignore
             }
         }
+
+        showSuccessToast("Completed loading gravity field.");
     }
 }

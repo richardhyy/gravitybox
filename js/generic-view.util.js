@@ -80,15 +80,19 @@ function showToast(message, additionalClass = ["text-white", "bg-dark"], timeout
     if (_toastTimeout) {
         // clear previous timeout
         clearTimeout(_toastTimeout);
+        _toastTimeout = undefined;
     }
 
     let bsToast = new bootstrap.Toast(toast)
     bsToast.show()
-    _toastTimeout = setTimeout(function () {
-        bsToast.hide();
-        toast.classList.remove(...additionalClass);
-        _toastTimeout = null;
-    }, timeout);
+
+    if (timeout > 0) {
+        _toastTimeout = setTimeout(function () {
+            bsToast.hide();
+            toast.classList.remove(...additionalClass);
+            _toastTimeout = undefined;
+        }.bind(this), timeout);
+    }
 }
 
 /**
@@ -98,6 +102,10 @@ function showToast(message, additionalClass = ["text-white", "bg-dark"], timeout
  */
 function showTipToast(message) {
     showToast("<b class='lh-lg'><i class='bi bi-lightbulb-fill'></i> Tip:</b><br>" + message);
+}
+
+function showSuccessToast(message) {
+    showToast("<i class='bi bi-check2-circle'></i>&nbsp;&nbsp;" + message);
 }
 
 function showErrorToast(message) {
@@ -117,7 +125,7 @@ function showErrorToastAjax(error, defaultMessage) {
     showErrorToast(message);
 }
 
-function showProcessingToast(text = " Please wait...", timeout = 500) {
+function showProcessingToast(text = " Please wait...", timeout = 5000) {
     showToast('<div class="spinner-border spinner-border-sm" role="status"></div> ' + text, ['text-white', 'bg-dark'], timeout);
 }
 
