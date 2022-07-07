@@ -31,6 +31,10 @@ class Visualization {
         }
     }
 
+    get isRotating() {
+        return this.rotationTimer !== null;
+    }
+
     toggleRotation() {
         if (this.rotationTimer) {
             clearInterval(this.rotationTimer);

@@ -61,6 +61,8 @@ $("#screenshot-btn").on('click', function() {
 
 $("#rotate-btn").on('click', function() {
     visualization.toggleRotation();
+
+    $(this).children("i").toggleClass("bi-pause-circle bi-play-circle");
 });
 
 
