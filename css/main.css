@@ -38,6 +38,10 @@ html,body {
     box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
 }
 
+.top-control {
+    z-index: 100;
+}
+
 /* Tool panel */
 
 #tool-panel {

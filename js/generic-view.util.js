@@ -72,7 +72,7 @@ function clearInnerAndShowSpinner(id, showToast = true) {
 
 let _toastTimeout = null;
 
-function showToast(message, additionalClass = ["text-white", "bg-dark"], timeout = 3000) {
+function showToast(message, additionalClass = ["text-white"], timeout = 3000) {
     let toast = document.getElementById("generic-toast");
     toast.classList.add(...additionalClass);
     document.getElementById("toast-message").innerHTML = message;
@@ -83,8 +83,8 @@ function showToast(message, additionalClass = ["text-white", "bg-dark"], timeout
         _toastTimeout = undefined;
     }
 
-    let bsToast = new bootstrap.Toast(toast)
-    bsToast.show()
+    let bsToast = new bootstrap.Toast(toast);
+    bsToast.show();
 
     if (timeout > 0) {
         _toastTimeout = setTimeout(function () {
@@ -127,6 +127,28 @@ function showErrorToastAjax(error, defaultMessage) {
 
 function showProcessingToast(text = " Please wait...", timeout = 15000) {
     showToast('<div class="spinner-border spinner-border-sm" role="status"></div> ' + text, ['text-white', 'bg-dark'], timeout);
+}
+
+
+let downloadToast = new bootstrap.Toast(document.getElementById('download-progress-toast'));
+let downloadToastShowing = false;
+let downloadFilename = $('#downloadingFilename');
+let downloadProgressBar = $('#downloadProgressBar');
+function showDownloadingToast(filename, percent) {
+    if (!downloadToastShowing) {
+        downloadToastShowing = true;
+        downloadFilename.text(filename);
+        downloadToast.show();
+    }
+
+    downloadProgressBar.css('width', percent + '%');
+}
+
+function hideDownloadingToast() {
+    downloadToastShowing = false;
+    downloadToast.hide();
+
+    downloadProgressBar.css('width', '0%');
 }
 
 function toggleButtonStatus(btnId, processing) {
