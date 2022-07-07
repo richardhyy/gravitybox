@@ -68,6 +68,9 @@ $("#rotate-btn").on('click', function() {
 
 // Initialize options
 $("#rotationSpeedSlider").val(visualization.rotationInterval);
+$("#xAngleSlider").val(visualization.rotationAxes[0] * 10);
+$("#yAngleSlider").val(visualization.rotationAxes[1] * 10);
+$("#zAngleSlider").val(visualization.rotationAxes[2] * 10);
 $("#generalizationSlider").val(visualization.generalization);
 $("#colorSlicingCheck").prop('checked', visualization.colorSlicing);
 $("#singleColorOption").css('display', visualization.colorSlicing ? 'none' : 'block');
@@ -86,6 +89,7 @@ $("#colorSlicingCheck").on('change', function() {
 
 $("#save-btn").on('click', function() {
     visualization.rotationInterval = 100 - parseInt($("#rotationSpeedSlider").val());
+    visualization.rotationAxes = [parseInt($("#xAngleSlider").val()) / 10, parseInt($("#yAngleSlider").val()) / 10, parseInt($("#zAngleSlider").val()) / 10];
 
     let renderConfigChanged = false;
     let generalization = parseInt($("#generalizationSlider").val());

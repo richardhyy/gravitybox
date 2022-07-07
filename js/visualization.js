@@ -2,6 +2,7 @@ class Visualization {
     gravityField;
     magnitudeRange;
     rotationInterval = 50;
+    rotationAxes = [0, 0, 0.2]; // Z-Axis for 0.2 deg per frame by default
     #currentRotationInterval = 50;
     rotationTimer = null;
     generalization = 50;
@@ -49,7 +50,15 @@ class Visualization {
                     instance.rotationTimer = setInterval(rotate, instance.rotationInterval);
                 }
                 // Rotate the camera
-                camera.rotate(Cesium.Cartesian3.UNIT_Z, Cesium.Math.toRadians(0.2));
+                if (instance.rotationAxes[0] !== 0) {
+                    camera.rotate(Cesium.Cartesian3.UNIT_X, Cesium.Math.toRadians(instance.rotationAxes[0]));
+                }
+                if (instance.rotationAxes[1] !== 0) {
+                    camera.rotate(Cesium.Cartesian3.UNIT_Y, Cesium.Math.toRadians(instance.rotationAxes[1]));
+                }
+                if (instance.rotationAxes[2] !== 0) {
+                    camera.rotate(Cesium.Cartesian3.UNIT_Z, Cesium.Math.toRadians(instance.rotationAxes[2]));
+                }
             };
             this.rotationTimer = setInterval(rotate, this.rotationInterval);
         }

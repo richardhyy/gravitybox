@@ -68,20 +68,43 @@
                 <h5 class="modal-title" id="optionModalLabel">Options</h5>
             </div>
             <div class="modal-body">
-                <label for="rotationSpeedSlider" class="form-label">Rotation speed</label>
-                <input type="range" class="form-range" min="1" max="99" id="rotationSpeedSlider">
+                <div class="option-group">
+                    <label for="rotationSpeedSlider" class="form-label">Rotation speed</label>
+                    <input type="range" class="form-range" min="1" max="99" id="rotationSpeedSlider">
 
-                <label for="generalizationSlider" class="form-label">Gravity field generalization</label>
-                <input type="range" class="form-range" min="0" max="1000" id="generalizationSlider">
+                    <div class="row">
+                        <div class="col">
+                            <label for="xAngleSlider" class="form-label">X-Axis Angle</label>
+                            <input type="range" class="form-range" min="-2" max="2" id="xAngleSlider">
+                        </div>
+                        <div class="col">
+                            <label for="yAngleSlider" class="form-label">Y-Axis Angle</label>
+                            <input type="range" class="form-range" min="-2" max="2" id="yAngleSlider">
+                        </div>
+                        <div class="col">
+                            <label for="zAngleSlider" class="form-label">Z-Axis Angle</label>
+                            <input type="range" class="form-range" min="-2" max="2" id="zAngleSlider">
+                        </div>
+                    </div>
+                </div>
 
-                <input class="form-check-input" type="checkbox" value="" id="colorSlicingCheck" checked>
-                <label class="form-check-label" for="colorSlicingCheck">
-                    Enable color slicing
-                </label>
+                <div class="option-group">
+                    <label for="generalizationSlider" class="form-label">Gravity field generalization</label>
+                    <input type="range" class="form-range" min="0" max="1000" id="generalizationSlider">
+                </div>
 
-                <div id="singleColorOption" style="display: none">
-                    <label for="singleColorInput" class="form-label">Single color</label>
-                    <input type="color" class="form-control form-control-color" id="singleColorInput" value="#00FFFF" title="Choose color for gravity field">
+                <div class="option-group mb-0">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" value="" id="colorSlicingCheck" checked>
+                        <label class="form-check-label" for="colorSlicingCheck">
+                            Enable color slicing
+                        </label>
+                    </div>
+
+                    <div id="singleColorOption" style="display: none" class="mb-1">
+                        <label for="singleColorInput" class="form-label">Single color</label>
+                        <input type="color" class="form-control form-control-color" id="singleColorInput" value="#00FFFF" title="Choose color for gravity field">
+                    </div>
                 </div>
             </div>
             <div class="d-flex justify-content-between m-3">

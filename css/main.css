@@ -159,3 +159,29 @@ html,body {
     margin: 0;
     padding: 0;
 }
+
+/* Options */
+.option-group {
+    background-color: rgba(238, 238, 238, 0.05);
+    border-radius: 5px;
+    padding: 15px 15px 10px 15px;
+    margin-bottom: 1em;
+}
+
+.form-range::-webkit-slider-runnable-track {
+    background: var(--bs-gray) !important;
+}
+
+.form-range::-moz-range-track {
+    background: var(--bs-gray) !important;
+}
+
+.form-range::-ms-track {
+    background: var(--bs-gray) !important;
+}
+
+.form-control-color {
+    background-color: var(--bs-gray-700) !important;
+    border-color: var(--bs-gray-600) !important;
+    padding: 0.3rem !important;
+}
