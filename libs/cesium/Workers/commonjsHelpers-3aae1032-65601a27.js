@@ -46,4 +46,4 @@ define(['exports'], (function (exports) { 'use strict';
 	exports.createCommonjsModule = createCommonjsModule;
 
 }));
-//# sourceMappingURL=_commonjsHelpers-3aae1032-65601a27.js.map
+//# sourceMappingURL=commonjsHelpers-3aae1032-65601a27.js.map

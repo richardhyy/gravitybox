@@ -23,7 +23,7 @@
  * See https://github.com/CesiumGS/cesium/blob/main/LICENSE.md for full licensing details.
  */
 
-define(['./RuntimeError-4f8ec8a2', './defaultValue-97284df2', './_commonjsHelpers-3aae1032-65601a27', './createTaskProcessorWorker'], (function (RuntimeError, defaultValue, _commonjsHelpers3aae1032, createTaskProcessorWorker) { 'use strict';
+define(['./RuntimeError-4f8ec8a2', './defaultValue-97284df2', './commonjsHelpers-3aae1032-65601a27', './createTaskProcessorWorker'], (function (RuntimeError, defaultValue, _commonjsHelpers3aae1032, createTaskProcessorWorker) { 'use strict';
 
   const compressedMagic$1 = 0x7468dead;
   const compressedMagicSwap$1 = 0xadde6874;
