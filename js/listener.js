@@ -1,13 +1,13 @@
 let visualization = new Visualization();
 let library = new Library();
 
+let libraryDiv = $("#library");
+let libraryOffcanvas = new bootstrap.Offcanvas(libraryDiv);
 $("#library-btn").on("click", function () {
     removeIntroductionFlashing();
 
     // Show library
-    let libraryDiv = $("#library");
-    let offcanvas = new bootstrap.Offcanvas(libraryDiv);
-    offcanvas.show();
+    libraryOffcanvas.show();
 });
 
 $("#load-btn").on('click', function() {

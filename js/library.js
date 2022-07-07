@@ -73,5 +73,9 @@ class Library {
         }, (error) => {
             showErrorToast(`Failed to load gravity field (${name})`);
         });
+
+        // hide library offcanvas
+        libraryOffcanvas.hide();
+        showToast(`Loading ${name}, this may take a while.`);
     }
 }
