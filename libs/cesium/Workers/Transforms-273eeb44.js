@@ -23,7 +23,7 @@
  * See https://github.com/CesiumGS/cesium/blob/main/LICENSE.md for full licensing details.
  */
 
-define(['exports', './Matrix2-9e1c22e2', './RuntimeError-4f8ec8a2', './defaultValue-97284df2', './ComponentDatatype-4eeb6d9b', './commonjsHelpers-3aae1032-65601a27', './combine-d11b1f00'], (function (exports, Matrix2, RuntimeError, defaultValue, ComponentDatatype, _commonjsHelpers3aae1032, combine) { 'use strict';
+define(['exports', './Matrix2-9e1c22e2', './RuntimeError-4f8ec8a2', './defaultValue-97284df2', './ComponentDatatype-4eeb6d9b', './commonjsHelpers', './combine-d11b1f00'], (function (exports, Matrix2, RuntimeError, defaultValue, ComponentDatatype, _commonjsHelpers3aae1032, combine) { 'use strict';
 
   /**
    * A simple map projection where longitude and latitude are linearly mapped to X and Y by multiplying
