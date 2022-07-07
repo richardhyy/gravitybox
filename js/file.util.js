@@ -26,7 +26,13 @@ function fetchFile(url, responseType, onComplete, onError) {
     xhr.open('GET', url, true);
     xhr.responseType = responseType;
     xhr.onprogress = ev => {
-        let percent = ev.loaded / ev.total * 100;
+        let contentLength;
+        if (ev.lengthComputable) {
+            contentLength = ev.total;
+        } else {
+            contentLength = parseInt(ev.target.getResponseHeader('x-decompressed-content-length'), 10);
+        }
+        let percent = ev.loaded / contentLength * 100;
         showDownloadingToast(filename, percent);
     }
     xhr.onreadystatechange = ev => {
