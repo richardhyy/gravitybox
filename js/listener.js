@@ -66,6 +66,17 @@ $("#rotate-btn").on('click', function() {
 });
 
 
+$("#fullscreen-btn").on('click', function() {
+    if (Cesium.Fullscreen.fullscreen) {
+        Cesium.Fullscreen.exitFullscreen();
+    } else {
+        Cesium.Fullscreen.requestFullscreen(document.body);
+    }
+
+    $(this).children("i").toggleClass("bi-fullscreen bi-fullscreen-exit");
+});
+
+
 // Initialize options
 $("#rotationSpeedSlider").val(visualization.rotationInterval);
 $("#xAngleSlider").val(visualization.rotationAxes[0] * 10);
