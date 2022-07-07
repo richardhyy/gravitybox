@@ -176,7 +176,15 @@ class DownloadIndication {
     updateProgress(percent) {
         // Must use native JS to update the progress bar
         let downloadProgressBar = document.getElementById("downloadProgressBar" + this.filename);
-        downloadProgressBar.style.width = percent + "%";
+        if (isNaN(percent) || true) {
+            // Indeterminate
+            downloadProgressBar.style.width = "20%";
+            if (!downloadProgressBar.classList.contains("indeterminate-progress")) {
+                downloadProgressBar.classList.add("progress-bar-striped", "indeterminate-progress");
+            }
+        } else {
+            downloadProgressBar.style.width = percent + "%";
+        }
     }
 }
 let downloads = [];
