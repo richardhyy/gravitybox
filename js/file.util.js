@@ -36,7 +36,7 @@ function fetchFile(url, responseType, onComplete, onError) {
             } else {
                 onError(xhr.status);
             }
-            hideDownloadingToast();
+            hideDownloadingToast(filename);
         }
     }
     xhr.onerror = onError;

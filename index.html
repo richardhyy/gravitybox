@@ -112,7 +112,7 @@
 
 
 <!-- Toast -->
-<div class="toast-container position-static position-fixed top-0 end-0 p-2 m-2 top-control">
+<div class="toast-container position-static position-fixed top-0 end-0 p-2 m-2 top-control" id="toastContainer">
     <div id="generic-toast" class="toast blur-background" role="alert" aria-live="assertive"
          aria-atomic="true" data-bs-autohide="false">
         <div class="d-flex">
@@ -123,26 +123,8 @@
         </div>
     </div>
 
-    <div id="download-progress-toast" class="toast blur-background" role="alert" aria-live="assertive"
-         aria-atomic="true" data-bs-autohide="false">
-        <div class="d-flex">
-            <div class="toast-body text-white d-flex align-items-center w-100" id="download-progress-toast-message">
-                <div class="pt-2">
-                    <div class="spinner-border spinner-border-sm" role="status"></div>
-                </div>
-                <div class="ps-2 w-100">
-                    <span>Downloading: </span>
-                    <span id="downloadingFilename">filename</span>
-                    <br>
-                    <div class="progress bg-secondary" style="height: 1px">
-                        <div class="progress-bar bg-info" role="progressbar" id="downloadProgressBar" style="width: 0%"></div>
-                    </div>
-                </div>
-            </div>
-            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
-                    aria-label="Close"></button>
-        </div>
-    </div>
+    <!-- Download toasts -->
+
 </div>
 
 <script src="js/generic-view.util.js"></script>

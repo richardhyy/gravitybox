@@ -130,26 +130,75 @@ function showProcessingToast(text = " Please wait...", timeout = 15000) {
 }
 
 
-let downloadToast = new bootstrap.Toast(document.getElementById('download-progress-toast'));
-let downloadToastShowing = false;
-let downloadFilename = $('#downloadingFilename');
-let downloadProgressBar = $('#downloadProgressBar');
-function showDownloadingToast(filename, percent) {
-    if (!downloadToastShowing) {
-        downloadToastShowing = true;
-        downloadFilename.text(filename);
-        downloadToast.show();
+class DownloadIndication {
+    DOWNLOAD_TOAST_TEMPLATE = `
+    <div id="download-progress-toast{{filename}}" class="toast blur-background" role="alert" aria-live="assertive"
+         aria-atomic="true" data-bs-autohide="false">
+        <div class="d-flex">
+            <div class="toast-body text-white d-flex align-items-center w-100">
+                <div class="pt-2">
+                    <div class="spinner-border spinner-border-sm" role="status"></div>
+                </div>
+                <div class="ps-2 w-100">
+                    <span>Downloading: </span>
+                    <span>{{filename}}</span>
+                    <br>
+                    <div class="progress bg-secondary" style="height: 1px">
+                        <div class="progress-bar bg-info" role="progressbar" id="downloadProgressBar{{filename}}" style="width: 0"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    `;
+    downloadToast;
+
+    constructor(filename, percent) {
+        this.filename = filename;
+        this.percent = percent;
+
+        let toastHtml = this.DOWNLOAD_TOAST_TEMPLATE.replaceAll('{{filename}}', filename);
+        document.getElementById("toastContainer").insertAdjacentHTML('beforeend', toastHtml);
+        let toastDiv = document.getElementById("download-progress-toast" + filename);
+        this.downloadToast = new bootstrap.Toast(toastDiv);
+        this.downloadToast.show();
     }
 
-    downloadProgressBar.css('width', percent + '%');
+    hide() {
+        // destroy the toast
+        this.downloadToast.hide();
+        setTimeout(function () {
+            // remove the toast from the DOM
+            document.getElementById("download-progress-toast" + this.filename).remove();
+        }.bind(this), 1000);
+    }
+
+    updateProgress(percent) {
+        // Must use native JS to update the progress bar
+        let downloadProgressBar = document.getElementById("downloadProgressBar" + this.filename);
+        downloadProgressBar.style.width = percent + "%";
+    }
+}
+let downloads = [];
+
+function showDownloadingToast(filename, percent) {
+    let download = downloads.find(d => d.filename === filename);
+    if (!download) {
+        download = new DownloadIndication(filename, percent);
+        downloads.push(download);
+    } else {
+        download.updateProgress(percent);
+    }
 }
 
-function hideDownloadingToast() {
-    downloadToastShowing = false;
-    downloadToast.hide();
-
-    downloadProgressBar.css('width', '0%');
+function hideDownloadingToast(filename) {
+    let download = downloads.find(d => d.filename === filename);
+    if (download) {
+        download.hide();
+        downloads.splice(downloads.indexOf(download), 1);
+    }
 }
+
 
 function toggleButtonStatus(btnId, processing) {
     let btn = document.getElementById(btnId);
