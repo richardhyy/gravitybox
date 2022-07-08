@@ -98,7 +98,14 @@ $("#colorSlicingCheck").on('change', function() {
     $("#singleColorOption").css('display', checked ? 'none' : 'block');
 });
 
+$("#generalizationSlider").on('change', function() {
+    let newValue = parseInt($(this).val());
+    $("#generalizationPerformanceWarning").css('display', newValue <= 10 ? 'inline' : 'none');
+});
+
 $("#save-btn").on('click', function() {
+    optionModal.hide();
+
     visualization.rotationInterval = 100 - parseInt($("#rotationSpeedSlider").val());
     visualization.rotationAxes = [parseInt($("#xAngleSlider").val()) / 10, parseInt($("#yAngleSlider").val()) / 10, parseInt($("#zAngleSlider").val()) / 10];
 
@@ -125,5 +132,4 @@ $("#save-btn").on('click', function() {
     if (renderConfigChanged) {
         visualization.drawGravityFiled();
     }
-    optionModal.hide();
 });

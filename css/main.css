@@ -168,6 +168,14 @@ html,body {
     margin-bottom: 1em;
 }
 
+.warning-text {
+    color: #e5af02;
+    border: #e5af02 1px solid;
+    border-radius: 0.4em;
+    padding: 0.2em 0.5em;
+    font-size: 0.8em;
+}
+
 .form-range::-webkit-slider-runnable-track {
     background: var(--bs-gray) !important;
 }
