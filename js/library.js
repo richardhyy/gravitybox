@@ -39,6 +39,11 @@ class Library {
                 }
             },
             error: (xhr, status, error) => {
+                $('#' + this.LIBRARY_LIST_ID).html(`<div class="text-center">
+                    <i class="fs-4 bi bi-cloud-slash"></i><br>
+                    Samples currently not available<br>
+                    <span class="text-muted small">${error}</span>
+                    </div>`);
                 console.log(error);
             }
         });
