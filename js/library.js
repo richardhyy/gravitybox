@@ -16,6 +16,7 @@ class Library {
     INDEX_URL = '/resources/samples/list.json';
     LIBRARY_LIST_ID = 'library-items';
     items = [];
+    selected = null;
 
     constructor() {
         this.fetchItems();
@@ -30,6 +31,12 @@ class Library {
             success: (data) => {
                 this.items = data;
                 this.render();
+
+                // Check if there is a selected item in url
+                let selected = this.getItemFromUrlParam();
+                if (selected) {
+                    this.loadItem(selected);
+                }
             },
             error: (xhr, status, error) => {
                 console.log(error);
@@ -53,7 +60,28 @@ class Library {
         }
     }
 
+    /**
+     * Set url parameter to target at currently selected item
+     */
+    setUrlParam() {
+        let url = new URL(window.location.href);
+        url.searchParams.set('s', this.selected);
+        window.history.pushState({}, '', url.href);
+    }
+
+    /**
+     * Get library item from url parameter
+     * @returns {string}
+     */
+    getItemFromUrlParam() {
+        let url = new URL(window.location.href);
+        return url.searchParams.get('s');
+    }
+
     loadItem(name) {
+        this.selected = name;
+        this.setUrlParam();
+
         let item = this.items[name];
         let model = item.files.model;
         let gravityField = item.files.gravity_field;
