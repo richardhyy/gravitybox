@@ -14,7 +14,7 @@ html,body {
     background: #000;
 }
 
-#author {
+#watermark {
     position: absolute;
     bottom: 0;
     right: 0;

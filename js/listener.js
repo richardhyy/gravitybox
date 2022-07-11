@@ -133,3 +133,7 @@ $("#save-btn").on('click', function() {
         visualization.drawGravityFiled();
     }
 });
+
+$("#watermark").on('click', function() {
+    $(this).text("@ AlanRichard")
+});
